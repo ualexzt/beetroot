@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>List of friends</title>
+	<meta charset="utf-8"/>
+	<link
+			rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+			integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+			crossorigin="anonymous"
+	/>
+</head>
+<body>
+<div class="container">
+	<h1>List of my friends</h1>
+
+	<ul id="list" class="list-group"></ul>
+</div>
+<script>
+	// Написать функцию map, которая будет принимать в качестве
+	// аргумента массив arr и функцию, которая в свою очередь будет
+	// осуществлять преобразование массива arr  в вид
+	// [ "<li class="list-group-item">Tom</li>", ....]
+	// и выводить элементы массива в ul с id="list"
+	// Вывод должен осуществляться в отсортированном по алфавиту виде
+
+	let arr = ['Tom', 'Steve', 'Bill', 'Rita', 'Pete', 'Ashley']
+	const list = document.getElementById('list')
+
+	function fn(item) {
+		const liItem = document.createElement('li')
+		liItem.classList.add('list-group-item')
+		liItem.innerHTML = item
+		return liItem.outerHTML
+	}
+
+	// Сигнатура map
+	function map(arr, fn) {
+		// todo
+		const result = []
+		for (let item of arr) {
+			result.push(fn(item))
+		}
+		return result
+	}
+
+	function addToDom(arr) {
+		arr.sort().forEach(item => list.insertAdjacentHTML('beforeend', item))
+	}
+	
+	addToDom(map(arr, fn))
+
+</script>
+</body>
+</html>
