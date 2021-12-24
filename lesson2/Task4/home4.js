@@ -63,11 +63,8 @@ const getProp = (keySelect) => {
     //     result.push(item[keySelect])
     //   }
     // }
-
-    return arr.reduce((acc, item) => {
-      acc.push(item[keySelect])
-      return acc
-    }, [])
+    
+    return arr.map(item => item[keySelect])
   }
 }
 const groupedItems = (arr) => {
