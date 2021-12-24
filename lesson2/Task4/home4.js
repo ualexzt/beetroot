@@ -57,14 +57,17 @@ const pipe = (...fns) => (x) => fns.reduce((v, f) => f(v), x)
 /*  Business logic */
 const getProp = (keySelect) => {
   return function (arr) {
-    let result = []
-    Object.keys(users[0]).includes(keySelect) ? arr = users : arr = products
-    for (let item of arr) {
-      if (item[keySelect]) {
-        result.push(item[keySelect])
-      }
-    }
-    return result
+    //let result = []
+    // for (let item of arr) {
+    //   if (item[keySelect]) {
+    //     result.push(item[keySelect])
+    //   }
+    // }
+
+    return arr.reduce((acc, item) => {
+      acc.push(item[keySelect])
+      return acc
+    }, [])
   }
 }
 const groupedItems = (arr) => {
@@ -81,11 +84,11 @@ const sortBy = (arr) => {
 
 }
 const getOpts = (arr) => {
-  const optsResult = []
-  for (let item of arr) {
-    optsResult.push(`<option>${item}</option>`)
-  }
-  return optsResult
+  // const optsResult = []
+  // for (let item of arr) {
+  //   optsResult.push(`<option>${item}</option>`)
+  // }
+  return arr.map(item => `<option>${item}</option>`)
 }
 
 /* =========== client code ===============  */

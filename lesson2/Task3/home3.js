@@ -19,9 +19,10 @@ function filter(arr, fn) {
 
 // Перевірка - повернути масив з елементами значення яких більше 50
 const filteredArr = filter(arr, function (item) {
-  if (item > 50) {
-    return item
-  }
+  // if (item > 50) {
+  //   return item
+  // }
+  return item > 50
 })
 
 console.log(filteredArr) //   [66, 55]]

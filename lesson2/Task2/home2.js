@@ -28,11 +28,11 @@ function getVotes(list) {
   })
   return Object.entries(res)
     .sort((a, b) => b[1] - a[1])
-    .reduce((acc, item) => {
-      console.log(item)
-      acc.push(item[0])
-      return acc
-    }, [])
+    // .reduce((acc, item) => {
+    //   acc.push(item[0])
+    //   return acc
+    // }, [])
+    .map(item => item[0])
 }
 
 console.log(getVotes(votes)) // [react, vue, angular]
