@@ -6,16 +6,31 @@ class Cat {
     this.happiness = happiness
   }
 
-  feed() {
-
+  eat() {
+    this.tiredness -= 5
+    this.hunger += 20
+    this.lonliness += 5
+    this.happiness += 10
   }
 
   sleep() {
-    setTimeout(() => {
-      
-    }, 5000)
+    this.tiredness += 20
+    this.hunger -= 10
+    this.lonliness -= 5
+    this.happiness += 10
   }
 
   game() {
+    this.tiredness -= 20
+    this.hunger -= 20
+    this.lonliness += 10
+    this.happiness += 20
+  }
+
+  wash() {
+    this.tiredness -= 5
+    this.hunger -= 10
+    this.lonliness += 20
+    this.happiness += 10
   }
 }
