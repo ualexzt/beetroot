@@ -23,9 +23,12 @@ async function getPosts() {
     let response = await fetch('http://jsonplaceholder.typicode.com/posts?_start=8&_limit=5')
     let data = await response.json()
     const blog = data.map(post => `
-          <h3>${post.title}</h3> 
+        <div class="py-2">
+        <h3>${post.title}</h3> 
           <p>${post.body}</p>
-          <span id='${post.id}' class="author-link" onclick="getUser(${post.userId}, ${post.id})">Get author</span> 
+          <span id='${post.id}' class="btn btn-secondary" onclick="getUser(${post.userId}, ${post.id})">Get author</span>
+          <hr>
+        </div>
       `,
     )
     posts.innerHTML = blog.join('')
@@ -41,14 +44,16 @@ async function getUser(id, postId) {
     let count = await fetch(`https://jsonplaceholder.typicode.com/posts?userId=${id}`)
     let user = await res.json()
     let countPost = await count.json()
-    const userInfo = `<div>
-        <h4>Author: ${user.name}</h4>
+    const userInfo = `
+    <div>
+        <h6>Author: ${user.name}</h6>
         <p>Username: ${user.username}</p>
         <p>Email: ${user.email}</p>
         <p>Post count: ${countPost.length}</p>
         </div>
      `
-    span.insertAdjacentHTML('afterEnd', userInfo)
+    span.innerHTML = userInfo
+    span.className = ''
 
   } catch (e) {
     console.log('Error fetching' + e)
