@@ -1,10 +1,9 @@
 class Book {
-  constructor(name, genre, author, isRead, nextRead, dateRead) {
+  constructor(name, genre, author, isRead, dateRead) {
     this.name = name
     this.genre = genre
     this.author = author
     this.isRead = isRead
-    this.nextRead = nextRead
     this.dateRead = dateRead
   }
 }
@@ -32,11 +31,10 @@ class BookList {
       this.lastReadBook = this.nowReadBook
     }
     this.nowReadBook = book
-    this.nowReadBook['nextRead'] = true
     if (!this.allBook.includes(this.nowReadBook)) {
       this.addBookToAll(this.nowReadBook)
     }
-    this.nextReadBook = this.#addNextBook(this.allBook.find(item => item['isRead'] === false && item['nextRead'] === false))
+    this.nextReadBook = this.allBook.find(item => item['isRead'] === false && this.nowReadBook['name'] !== item['name'])
   }
 
   addBookToAll(book) {
@@ -50,12 +48,11 @@ class BookList {
   finishCurrentBook() {
     if (this.nowReadBook) {
       this.nowReadBook['isRead'] = true
-      this.nowReadBook['nextRead'] = false
       this.nowReadBook['dateRead'] = Date()
       this.lastReadBook = this.nowReadBook
     }
-    this.nowReadBook = this.allBook.find(item => item['nextRead'] === true && item['isRead'] === false)
-    this.nextReadBook = this.#addNextBook(this.allBook.find(item => item['isRead'] === false && item['nextRead'] === false))
+    this.nowReadBook = this.nextReadBook
+    this.nextReadBook = this.allBook.find(item => item['isRead'] === false && this.nowReadBook['name'] !== item['name'])
     this.#countBookState()
   }
 
@@ -73,11 +70,11 @@ class BookList {
     this.readyRead = countRead
     this.wishRead = countNoRead
   }
-
-  #addNextBook(book) {
-    if (book !== undefined) {
-      book['nextRead'] = true
-    }
-    return book
-  }
 }
+
+const book = new Book('book1', 'ganre1', 'author1', false)
+const book2 = new Book('book2', 'ganre2', 'author2', false)
+const book3 = new Book('book3', 'ganre2', 'author2', false)
+const book4 = new Book('book4', 'ganre1', 'author3', false)
+
+const bookList = new BookList()
