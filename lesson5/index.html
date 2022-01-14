@@ -23,23 +23,16 @@
 	class Search extends React.Component {
 		constructor(props) {
 			super(props)
-			this.handleFilterTextChange = this.handleFilterTextChange.bind(this)
-		}
 
-		handleFilterTextChange(e) {
-			this.props.onFilterTextChange(e.target.value)
 		}
 
 		render() {
 			return (
-
 					<div className="input-group m-3 w-auto">
 						<input
 								className="form-control"
 								type="text"
 								placeholder="Search here..."
-								value={this.props.filterText}
-								onChange={this.handleFilterTextChange}
 						/>
 					</div>
 			)
@@ -51,9 +44,12 @@
 		render() {
 			const user = this.props.user
 			return (
-					<div className="card">
+					<div className="card my-2">
+						<div className="card-header">
+							<strong>Name</strong>: {user.name}
+						</div>
 						<div className="card-body">
-							{user.name}
+							<strong>Username</strong>: {user.username} - <strong>Email</strong>: {user.email}
 						</div>
 					</div>
 			)
@@ -81,18 +77,9 @@
 		constructor(props) {
 			super(props)
 			this.state = {
-				filterText: '',
 				isFetching: false,
 				users: [],
 			}
-
-			this.handleFilterTextChange = this.handleFilterTextChange.bind(this)
-		}
-
-		handleFilterTextChange(filterText) {
-			this.setState({
-				filterText: filterText,
-			})
 
 		}
 
@@ -117,10 +104,7 @@
 		render() {
 			return (
 					<div>
-						<Search
-								filterText={this.state.filterText}
-								onFilterTextChange={this.handleFilterTextChange}
-						/>
+						<Search/>
 						{this.state.isFetching ? <h2>Loading data....</h2> : <UserTable users={this.state.users}/>}
 					</div>
 			)
