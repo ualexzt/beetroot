@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>Home work</title>
+	<link rel="stylesheet" href="../assets/css/bootstrap.min.css"/>
+</head>
+<body>
+<div id="root" class="container"></div>
+
+<script src="../assets/js/react.development.js"></script>
+<script src="../assets/js/react-dom.development.js"></script>
+<script src="../assets/js/prop-types.js"></script>
+<script src="../assets/js/babel.js"></script>
+
+<script type="text/babel">
+	const rootElement = document.getElementById('root')
+
+	class Search extends React.Component {
+		constructor(props) {
+			super(props)
+			this.handleFilterTextChange = this.handleFilterTextChange.bind(this)
+		}
+
+		handleFilterTextChange(e) {
+			this.props.onFilterTextChange(e.target.value)
+		}
+
+		render() {
+			return (
+
+					<div className="input-group m-3 w-auto">
+						<input
+								className="form-control"
+								type="text"
+								placeholder="Search here..."
+								value={this.props.filterText}
+								onChange={this.handleFilterTextChange}
+						/>
+					</div>
+			)
+		}
+	}
+
+	class User extends React.Component {
+
+		render() {
+			const user = this.props.user
+			return (
+					<div className="card">
+						<div className="card-body">
+							{user.name}
+						</div>
+					</div>
+			)
+		}
+	}
+
+	class UserTable extends React.Component {
+
+		render() {
+			const usersList = this.props.users
+			const listUsers = usersList.map((item) => <User key={item.id} user={item}/>)
+			return (
+					<div>
+						<p className="h3">User list:</p>
+						<div className="p-3"> {listUsers}</div>
+					</div>
+			)
+
+
+		}
+	}
+
+	class App extends React.Component {
+
+		constructor(props) {
+			super(props)
+			this.state = {
+				filterText: '',
+				isFetching: false,
+				users: [],
+			}
+
+			this.handleFilterTextChange = this.handleFilterTextChange.bind(this)
+		}
+
+		handleFilterTextChange(filterText) {
+			this.setState({
+				filterText: filterText,
+			})
+
+		}
+
+		async getUsers() {
+			try {
+				this.setState({...this.state, isFetching: true})
+				const res = await (await fetch('https://jsonplaceholder.typicode.com/users')).json()
+				this.setState({...this.state, users: res, isFetching: false})
+
+			} catch (e) {
+				console.log(e)
+				this.setState({...this.state, isFetching: false})
+			}
+
+		}
+
+
+		componentDidMount() {
+			this.getUsers()
+		}
+
+		render() {
+			return (
+					<div>
+						<Search
+								filterText={this.state.filterText}
+								onFilterTextChange={this.handleFilterTextChange}
+						/>
+						{this.state.isFetching ? <h2>Loading data....</h2> : <UserTable users={this.state.users}/>}
+					</div>
+			)
+		}
+	}
+
+	UserTable.propTypes = {
+		users: PropTypes.array,
+	}
+	User.protoType = {
+		user: PropTypes.object,
+	}
+	ReactDOM.render(<App/>, rootElement)
+
+
+</script>
+
+</body>
+</html>
