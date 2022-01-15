@@ -33,6 +33,8 @@
 								className="form-control"
 								type="text"
 								placeholder="Search here..."
+								value={this.props.searchText}
+								onChange={this.props.onSearch}
 						/>
 					</div>
 			)
@@ -60,11 +62,10 @@
 
 		render() {
 			const usersList = this.props.users
-			const listUsers = usersList.map((item) => <User key={item.id} user={item}/>)
 			return (
 					<div>
 						<p className="h3">User list:</p>
-						<div className="p-3"> {listUsers}</div>
+						<div className="p-3"> {usersList.map((item) => <User key={item.id} user={item}/>)}</div>
 					</div>
 			)
 
@@ -77,6 +78,7 @@
 		constructor(props) {
 			super(props)
 			this.state = {
+				searchText: '',
 				isFetching: false,
 				users: [],
 			}
@@ -96,29 +98,43 @@
 
 		}
 
+		handelSearch = (text) => {
+			return this.setState({searchText: text.target.value.toLowerCase()})
+		}
 
 		componentDidMount() {
 			this.getUsers()
 		}
 
 		render() {
+			const {searchText, users} = this.state
+			const filteringData = users.filter(item => item.name.toLowerCase().includes(searchText))
 			return (
 					<div>
-						<Search/>
-						{this.state.isFetching ? <h2>Loading data....</h2> : <UserTable users={this.state.users}/>}
+						<Search text={this.state.searchText} onSearch={this.handelSearch}/>
+						{this.state.isFetching ? <h2>Loading data....</h2> : <UserTable users={filteringData}/>}
 					</div>
 			)
 		}
 	}
 
 	UserTable.propTypes = {
-		users: PropTypes.array,
+		users: PropTypes.arrayOf(PropTypes.shape({
+			name: PropTypes.string.isRequired,
+			username: PropTypes.string.isRequired,
+			email: PropTypes.string.isRequired,
+		})),
 	}
-	User.protoType = {
-		user: PropTypes.object,
-	}
-	ReactDOM.render(<App/>, rootElement)
 
+	User.propType = {
+		user: PropTypes.shape({
+			name: PropTypes.string.isRequired,
+			username: PropTypes.string.isRequired,
+			email: PropTypes.string.isRequired,
+		}),
+	}
+
+	ReactDOM.render(<App/>, rootElement)
 
 </script>
 
