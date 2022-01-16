@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+	<title>Control form's elements</title>
+	<link rel="stylesheet" href="../assets/css/bootstrap.min.css"/>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="../assets/js/react.development.js"></script>
+<script src="../assets/js/react-dom.development.js"></script>
+<script src="../assets/js/prop-types.js"></script>
+<script src="../assets/js/babel.js"></script>
+
+<script type="text/babel">
+	const rootElement = document.getElementById('root')
+
+	function Input({change}) {
+		return (
+				<input
+						type="text"
+						className="form-control"
+						onChange={change}
+				/>
+		)
+	}
+
+	function TextArea({change}) {
+		return (
+				<textarea
+						//rows={Form.availableOptions.length}
+						onChange={change}
+						className="form-control"
+				/>
+		)
+	}
+
+	function Select({options, change}) {
+		return <select
+				className="custom-select"
+				multiple
+				size={options.length}
+				onChange={change}
+		>
+			{options.map(item => (
+					<option key={item} value={item}>
+						{item}
+					</option>
+			))}
+		</select>
+	}
+
+	function Form() {
+		const availableOptions = [
+			'apple',
+			'orange',
+			'grape',
+			'cherry',
+			'peach',
+			'pear',
+		]
+
+		const handleCommaSeperatedChange = e => {
+			console.log('Handle comma separated')
+		}
+
+		const handleMultipleChange = e => {
+			console.log('Handle multiline')
+		}
+
+		const handleMultiSelectChange = e => {
+			console.log('Handle multiselect')
+		}
+
+
+		return (
+				<div className="container">
+					<form>
+						<div className="row">
+							<div className="form-group col-md-4">
+								<label>Comma separated values</label>
+								<Input change={handleCommaSeperatedChange}/>
+							</div>
+
+							<div className="form-group  col-md-4">
+								<label className="label-control">Multi lines values</label>
+								<TextArea change={handleMultipleChange}/>
+							</div>
+
+							<div className="form-group  col-md-4">
+								<label className="label-control">Multi select change</label>
+								<Select options={availableOptions} change={handleMultiSelectChange}/>
+							</div>
+						</div>
+					</form>
+				</div>
+		)
+
+	}
+
+	ReactDOM.render(<Form/>, rootElement)
+</script>
+</body>
+</html>
