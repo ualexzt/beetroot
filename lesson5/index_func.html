@@ -84,8 +84,14 @@
 
 	}
 
+	Search.propType = {
+		searchText: PropTypes.string.isRequired,
+		onSearch: PropTypes.func.isRequired,
+	}
+
 	UserTable.propTypes = {
 		users: PropTypes.arrayOf(PropTypes.shape({
+			id: PropTypes.number.isRequired,
 			name: PropTypes.string.isRequired,
 			username: PropTypes.string.isRequired,
 			email: PropTypes.string.isRequired,
