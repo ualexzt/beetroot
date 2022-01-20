@@ -7,7 +7,7 @@ interface SearchProps{
 
 function Search({searchText, onSearch}: SearchProps) {
   return (
-    <div className="input-group m-3 w-auto">
+    <div className="w-auto">
       <input
         className="form-control"
         type="text"

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import Search from './Search'
 import UserList from './UserList'
 import {IUser} from './Types'
-
+import './App.css'
 
 function App() {
   const [users, setUsers] = useState<IUser[]>([])
@@ -21,7 +21,7 @@ function App() {
   const filteringData = users.filter(item => item.name.toLowerCase().includes(searchText))
 
   return (
-    <div>
+    <div className={'container'}>
       <Search searchText={searchText} onSearch={handelSearch}/>
       <UserList users={filteringData}/>
     </div>
