@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect, useState} from 'react'
+import Search from './Search'
+import UserList from './UserList'
+import {IUser} from './Types'
+
 
 function App() {
+  const [users, setUsers] = useState<IUser[]>([])
+  const [searchText, setSearchText] = useState('')
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(res => res.json())
+      .then(data => setUsers(data))
+  }, [])
+
+  const handelSearch = (text: React.ChangeEvent<HTMLInputElement>) => {
+    return setSearchText(text.target.value.toLowerCase())
+  }
+
+  const filteringData = users.filter(item => item.name.toLowerCase().includes(searchText))
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Search searchText={searchText} onSearch={handelSearch}/>
+      <UserList users={filteringData}/>
     </div>
-  );
+  )
 }
 
 export default App;
