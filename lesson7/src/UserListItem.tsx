@@ -5,7 +5,7 @@ interface UserProps{
   user: IUser
 }
 
-function UserSingle({user}: UserProps ) {
+function UserListItem({user}: UserProps ) {
   return (
     <div className="card my-2">
       <div className="card-header">
@@ -19,4 +19,4 @@ function UserSingle({user}: UserProps ) {
 
 }
 
-export default UserSingle
+export default UserListItem

@@ -14,7 +14,7 @@ function App() {
       .then(data => setUsers(data))
   }, [])
 
-  const handelSearch = (text: React.ChangeEvent<HTMLInputElement>) => {
+  const handelSearch : React.ChangeEventHandler<HTMLInputElement> = (text) => {
     return setSearchText(text.target.value.toLowerCase())
   }
 
