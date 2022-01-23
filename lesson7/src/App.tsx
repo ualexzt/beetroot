@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react'
-import Search from './Search'
-import UserList from './UserList'
+import Search from './components/Search'
+import UserList from './components/Users/UserList'
 import {IUser} from './Types'
-import './App.css'
+import {Container} from '@mui/material'
+import Navbar from './ui/navbar'
+import './index.css'
 
 function App() {
   const [users, setUsers] = useState<IUser[]>([])
@@ -14,18 +16,22 @@ function App() {
       .then(data => setUsers(data))
   }, [])
 
-  const handelSearch : React.ChangeEventHandler<HTMLInputElement> = (text) => {
+  const handelSearch: React.ChangeEventHandler<HTMLInputElement> = (text) => {
     return setSearchText(text.target.value.toLowerCase())
   }
 
   const filteringData = users.filter(item => item.name.toLowerCase().includes(searchText))
 
   return (
-    <div className={'container'}>
-      <Search searchText={searchText} onSearch={handelSearch}/>
-      <UserList users={filteringData}/>
-    </div>
+    <>
+      <Navbar/>
+
+      <Container maxWidth="lg" sx={{my: 2}}>
+        <Search searchText={searchText} onSearch={handelSearch}/>
+        <UserList users={filteringData}/>
+      </Container>
+    </>
   )
 }
 
-export default App;
+export default App

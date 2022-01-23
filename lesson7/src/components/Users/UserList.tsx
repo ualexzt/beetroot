@@ -1,18 +1,19 @@
 import React from 'react'
 import UserListItem from './UserListItem'
-import {IUser} from './Types'
+import {IUser} from '../../Types'
+import {List, Typography} from '@mui/material'
 
-interface UserListProps{
+interface UserListProps {
   users: IUser[]
 }
 
 function UserList({users}: UserListProps) {
   return (
     <div>
-      <p className="h3">User list:</p>
-      <div className="p-3">
+      <Typography variant="h3" sx={{mt: 2}}>User list:</Typography>
+      <List>
         {users.map((item) => <UserListItem key={item.id} user={item}/>)}
-      </div>
+      </List>
     </div>
   )
 
