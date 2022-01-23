@@ -26,7 +26,7 @@ function App() {
     <>
       <Navbar/>
 
-      <Container maxWidth="lg" sx={{my: 2}}>
+      <Container maxWidth="lg" sx={{mt: 10}}>
         <Search searchText={searchText} onSearch={handelSearch}/>
         <UserList users={filteringData}/>
       </Container>

@@ -7,7 +7,7 @@ import Button from '@mui/material/Button'
 import React from 'react'
 
 function Navbar() {
-  return <AppBar position="static">
+  return <AppBar position="fixed">
     <Toolbar>
       <IconButton
         size="large"
