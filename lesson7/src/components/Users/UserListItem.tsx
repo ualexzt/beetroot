@@ -2,8 +2,9 @@ import React, {useState} from 'react'
 import {IUser} from '../../Types'
 import {Avatar, IconButton, ListItem, ListItemText} from '@mui/material'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import PostsUser from '../Posts/PostsUser'
+import ArrowRightIcon from '@mui/icons-material/ArrowRight'
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 
 interface UserProps {
   user: IUser
@@ -14,9 +15,16 @@ function UserListItem({user}: UserProps) {
   return (
     <>
       <ListItem
+        onClick={() => setOpen(!open)}
+        sx={{
+          '&:hover': {
+            backgroundColor: '#eceff1',
+            cursor: 'pointer',
+          },
+        }}
         secondaryAction={
-          <IconButton edge="end" aria-label="delete" onClick={() => setOpen(!open)}>
-            <ArrowForwardIosIcon/>
+          <IconButton edge="end" aria-label="delete">
+            {open ? <ArrowDropDownIcon fontSize="large"/> : <ArrowRightIcon fontSize="large"/>}
           </IconButton>
         }>
         <Avatar>
