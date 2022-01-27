@@ -1,42 +1,35 @@
-import React from "react"
-import RegisterForm from "./RegisterForm"
-import LoginForm from "./LoginForm"
-import withToggle from "../hoc/withToggle"
+import React from 'react'
+import RegisterForm from './RegisterForm'
+import LoginForm from './LoginForm'
 
-class User extends React.Component {
-  submit = value => {
-    console.log(value)
-  }
+class  User extends React.Component {
+    state = {
+        isRegister: false
+    }
+    handleChange = e => this.setState({isRegister: Boolean(e.target.checked)})
 
-  render() {
-    const {isToggled, onChange} = this.props
+    submit = value => {
+        console.log(value)
+    }
 
-    return (
-      <div className="pt-3">
-        <div className="form-check">
-          <input
-            checked={isToggled}
-            onChange={onChange}
-            type="checkbox"
-            name="isRegister"
-            id="isRegister"
-            className="form-check-input"
-          />
-          <label className="form-check-label" htmlFor="isRegister">
-            Switch to {isToggled ? "Login" : "Register"}
-          </label>
+    render(){
+      const {isRegister} = this.state
+    
+      return (
+        <div className="pt-3">
+            <div className="form-check">
+               <input checked={isRegister} onChange={this.handleChange} 
+                type="checkbox"  name="isRegister" id="isRegister"  className="form-check-input" 
+                />
+                <label className="form-check-label" htmlFor="isRegister">Switch to {isRegister ? 'Login': 'Register'}</label>
+            </div>
+            <hr />
+
+           <h2>{isRegister ? 'Register': 'Login'}</h2>
+          
+           {isRegister ? <RegisterForm submit={this.submit} /> : <LoginForm submit={this.submit} />}
         </div>
-        <hr />
-
-        <h2>{isToggled ? "Register" : "Login"}</h2>
-
-        {isToggled ? (
-          <RegisterForm submit={this.submit} />
-        ) : (
-          <LoginForm submit={this.submit} />
-        )}
-      </div>
     )
-  }
+    }
 }
-export default withToggle(User)
+export default User; 
