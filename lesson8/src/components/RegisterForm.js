@@ -1,40 +1,20 @@
-import React, { Component } from "react";
+import React, {Component} from "react"
+import WithForm from "../hocs/withForm"
+import WithToggle from "../hocs/withToggle"
 
 class RegisterForm extends Component {
-  state = {
-    login: "",
-    email: "",
-    password: "",
-    isToggled: false
-  };
-
-  handleChange = e =>
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-
-  handleToggled = e =>
-    this.setState({
-      isToggled: Boolean(e.target.checked)
-    });
-
-  submit = e => {
-    e.preventDefault();
-    if (this.props.submit) {
-      this.props.submit(this.state);
-    }
-  };
-
   render() {
-    const { login, email, password, isToggled } = this.state;
+    const {isToggled} = this.props.toggleState
+    const {login, email, password} = this.props.formState
+    const {handleChange, submit, handleToggle} = this.props
     return (
-      <form onSubmit={this.submit} className="col-md-3" autoComplete="off">
+      <form onSubmit={submit} className="col-md-3" autoComplete="off">
         <div className="form-group">
           <label>Email</label>
           <input
             name="email"
             value={email}
-            onChange={this.handleChange}
+            onChange={handleChange}
             className="form-control"
           />
         </div>
@@ -43,7 +23,7 @@ class RegisterForm extends Component {
           <input
             name="login"
             value={login}
-            onChange={this.handleChange}
+            onChange={handleChange}
             className="form-control"
           />
         </div>
@@ -52,7 +32,7 @@ class RegisterForm extends Component {
           <input
             name="password"
             value={password}
-            onChange={this.handleChange}
+            onChange={handleChange}
             className="form-control"
           />
         </div>
@@ -60,7 +40,7 @@ class RegisterForm extends Component {
         <div className="form-check">
           <input
             checked={isToggled}
-            onChange={this.handleToggled}
+            onChange={handleToggle}
             type="checkbox"
             name="isAgree"
             id="isAgree"
@@ -77,8 +57,8 @@ class RegisterForm extends Component {
           </div>
         )}
       </form>
-    );
+    )
   }
 }
 
-export default RegisterForm;
+export default WithToggle(WithForm(RegisterForm))

@@ -1,33 +1,18 @@
-import React, { Component } from "react";
+import React, {Component} from "react"
+import WithForm from "../hocs/withForm"
 
 class LoginForm extends Component {
-  state = {
-    email: "",
-    password: ""
-  };
-
-  handleChange = e =>
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-
-  submit = e => {
-    e.preventDefault();
-    if (this.props.submit) {
-      this.props.submit(this.state);
-    }
-  };
-
   render() {
-    const { email, password } = this.state;
+    const {email, password} = this.props.formState
+    const {handleChange, submit} = this.props
     return (
-      <form onSubmit={this.submit} className="col-md-3" autoComplete="off">
+      <form onSubmit={submit} className="col-md-3" autoComplete="off">
         <div className="form-group">
           <label>Email</label>
           <input
             name="email"
             value={email}
-            onChange={this.handleChange}
+            onChange={handleChange}
             className="form-control"
           />
         </div>
@@ -36,7 +21,7 @@ class LoginForm extends Component {
           <input
             name="password"
             value={password}
-            onChange={this.handleChange}
+            onChange={handleChange}
             className="form-control"
           />
         </div>
@@ -44,7 +29,8 @@ class LoginForm extends Component {
           <button className="btn btn-primary">Login</button>
         </div>
       </form>
-    );
+    )
   }
 }
-export default LoginForm;
+
+export default WithForm(LoginForm)
